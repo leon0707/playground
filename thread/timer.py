@@ -6,4 +6,5 @@ def delayed_func():
 if __name__ == '__main__':
     t = threading.Timer(2, delayed_func)
     t.start()
+    # t.cancel()
     print('print after 2 secs')
