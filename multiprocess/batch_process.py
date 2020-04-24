@@ -70,6 +70,7 @@ class Worker(object):
         return batch
 
     def __process_result(self, task_id, result):
+        '''Add result into the output queue'''
         self._output_queue.put((task_id, result))
 
 
@@ -137,14 +138,14 @@ def batch_func(batch):
     return [v + v for v in batch]
 
 def create_bulk_request(n, processor):
-    processor.process(n)
+    print(n, processor.process(n))
 
 if __name__ == '__main__':
     mp.set_start_method('spawn')
     processor = BatchProcessor(batch_func, worker_num=2)
     
     threads = []
-    for i in range(2000):
+    for i in range(200):
         t = threading.Thread(target=create_bulk_request, args=(i, processor))
         t.start()
         threads.append(t)
